@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مفاجأة خاصة لك ❤️</title>
+  <!-- خط عربي أنيق وناعم -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Amiri:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- مكتبة أصوات بسيطة للتأثيرات الناعمة بدون روابط خارجية -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+  <style>
+    :root {
+      --bg-cream: #fff8f8;
+      --pink-soft: #ffe4e8;
+      --rose-primary: #e11d48;
+      --rose-dark: #9f1239;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: radial-gradient(circle at top right, #ffe4e8 0%, #fff9fa 45%, #fff0f3 100%);
+      color: #4a1525;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .font-letter {
+      font-family: 'Amiri', serif;
+    }
+
+    /* قلوب عائمة في الخلفية */
+    @keyframes floatUp {
+      0% {
+        transform: translateY(105vh) scale(0.7) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.55;
+      }
+      85% {
+        opacity: 0.45;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.15) rotate(25deg);
+        opacity: 0;
+      }
+    }
+
+    .floating-heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatUp linear infinite;
+    }
+
+    /* تنسيق شريط السحب المخصص */
+    input[type="range"].love-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(to left, #fda4af, #e11d48);
+      outline: none;
+      box-shadow: inset 0 2px 5px rgba(159, 18, 57, 0.2);
+      cursor: pointer;
+    }
+
+    input[type="range"].love-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 4px solid #e11d48;
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.45);
+      cursor: grab;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input[type="range"].love-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 6px 18px rgba(225, 29, 72, 0.6);
+    }
+
+    input[type="range"].love-slider::-moz-range-thumb {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 4px solid #e11d48;
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.45);
+      cursor: grab;
+    }
+
+    /* اهتزاز لطيف لصناديق الهدايا */
+    @keyframes giftWobble {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      25% { transform: rotate(-2.5deg) translateY(-4px); }
+      75% { transform: rotate(2.5deg) translateY(-4px); }
+    }
+
+    .gift-card:hover {
+      animation: giftWobble 0.7s ease-in-out infinite;
+    }
+
+    /* دوران أسطوانة الأغنية */
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .vinyl-spin {
+      animation: spinSlow 9s linear infinite;
+    }
+
+    .vinyl-paused {
+      animation-play-state: paused;
+    }
+
+    /* ظهور تدريجي ناعم */
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .animate-stage {
+      animation: fadeSlideUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* اهتزاز تنبيهي */
+    @keyframes shakeHorizontal {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    .shake-nudge {
+      animation: shakeHorizontal 0.45s ease-in-out;
+    }
+
+    /* نوتات موسيقية عائمة */
+    @keyframes noteFloat {
+      0% { transform: translateY(0) scale(0.8); opacity: 0; }
+      40% { opacity: 1; }
+      100% { transform: translateY(-45px) scale(1.2); opacity: 0; }
+    }
+
+    .music-note {
+      animation: noteFloat 2.4s ease-out infinite;
+    }
+  </style>
+</head>
+<body class="relative flex flex-col items-center justify-center p-4 sm:p-6 selection:bg-rose-200 selection:text-rose-900">
+
+  <!-- حاوية القلوب العائمة في الخلفية -->
+  <div id="hearts-bg" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+  <!-- شريط علوي بسيط (زر التعديل + إعادة التجربة) -->
+  <header class="fixed top-4 left-4 right-4 z-30 flex items-center justify-between max-w-4xl mx-auto pointer-events-none">
+    <button
+      id="reset-btn"
+      onclick="resetExperience()"
+      class="pointer-events-auto hidden items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/85 backdrop-blur-md border border-rose-200 text-rose-700 text-xs sm:text-sm font-bold shadow-sm hover:bg-rose-50 transition active:scale-95"
+      title="العودة للبداية">
+      <span>↺</span>
+      <span>إعادة البداية</span>
+    </button>
+    <div class="flex-1"></div>
+    <button
+      id="open-editor-btn"
+      onclick="toggleEditor(true)"
+      class="pointer-events-auto flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/90 backdrop-blur-md border border-rose-200 text-rose-800 text-xs sm:text-sm font-bold shadow-md hover:bg-rose-50 hover:border-rose-300 transition active:scale-95">
+      <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125" />
+      </svg>
+      <span>تعديل النصوص</span>
+    </button>
+  </header>
+
+  <!-- رسالة تنبيهية عائمة (بديل alert) -->
+  <div id="toast-box" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 opacity-0 pointer-events-none transition-all duration-300 transform -translate-y-2">
+    <div id="toast-content" class="px-5 py-2.5 rounded-full bg-rose-900 text-white text-sm font-bold shadow-lg flex items-center gap-2">
+      <span>❤️</span>
+      <span id="toast-text">رسالة</span>
+    </div>
+  </div>
+
+  <!-- المحتوى الرئيسي -->
+  <main class="relative z-10 w-full max-w-xl mx-auto my-auto pt-12 pb-6">
+
+    <!-- ==================== المرحلة الأولى: مقياس النسبة ==================== -->
+    <section id="stage-1" class="animate-stage bg-white/90 backdrop-blur-xl rounded-3xl p-6 sm:p-10 shadow-xl shadow-rose-200/50 border border-rose-100 text-center">
+      <!-- رسمة تفاعلية لطيفة تتغير مع السحب -->
+      <div id="character-stage" class="w-32 h-32 sm:w-36 sm:h-36 mx-auto mb-4 flex items-center justify-center rounded-full bg-rose-50/80 border-2 border-rose-100 shadow-inner transition-transform duration-300">
+        <!-- يتم حقن SVG الشخصية هنا ديناميكياً -->
+      </div>
+
+      <!-- السؤال الرئيسي -->
+      <h1 id="display-question" class="text-2xl sm:text-3xl font-extrabold text-rose-950 mb-1 leading-snug">
+        قد إيش تحبني؟
+      </h1>
+      <p id="reaction-caption" class="text-sm sm:text-base font-medium text-rose-500 mb-6 min-h-[24px] transition-all">
+        اسحب المؤشر لليمين أو اليسار وورّيني 👀
+      </p>
+
+      <!-- عداد النسبة المئوية + قوس جمالي -->
+      <div class="relative mb-6">
+        <div class="inline-flex items-baseline justify-center gap-1 px-6 py-2 rounded-2xl bg-gradient-to-b from-rose-50 to-pink-50 border border-rose-200/80 shadow-sm">
+          <span id="percentage-number" class="text-4xl sm:text-5xl font-extrabold text-rose-600 tabular-nums tracking-tight">0</span>
+          <span class="text-2xl sm:text-3xl font-extrabold text-rose-500">%</span>
+        </div>
+        <div id="overflow-badge" class="hidden mt-2 text-xs font-bold text-rose-600 bg-rose-100/80 px-3 py-1 rounded-full inline-block">
+          تعدّينا الحدود المسموحة من الحب! ✨
+        </div>
+      </div>
+
+      <!-- شريط السحب (من 0 إلى 500) -->
+      <div class="px-2 sm:px-4 mb-3" dir="ltr">
+        <input
+          id="love-slider"
+          type="range"
+          min="0"
+          max="500"
+          value="0"
+          step="1"
+          class="love-slider"
+          aria-label="مقياس النسبة"
+        />
+        <div class="flex justify-between text-xs font-bold text-rose-400 mt-2 px-1">
+          <span>0%</span>
+          <span>100%</span>
+          <span>250%</span>
+          <span>500% 💖</span>
+        </div>
+      </div>
+
+      <!-- زر التأكيد والانتقال -->
+      <div class="mt-7">
+        <button
+          id="confirm-love-btn"
+          onclick="handleConfirmLove()"
+          class="w-full sm:w-auto min-w-[220px] px-8 py-3.5 rounded-2xl font-extrabold text-base sm:text-lg transition-all duration-300 shadow-md bg-rose-200 text-rose-500 cursor-pointer hover:bg-rose-300 active:scale-95">
+          تأكيد النتيجة ✨
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== المرحلة الثانية: صناديق الهدايا ==================== -->
+    <section id="stage-2" class="hidden animate-stage text-center">
+      <div class="bg-white/90 backdrop-blur-xl rounded-3xl p-6 sm:p-9 shadow-xl shadow-rose-200/50 border border-rose-100">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-rose-100 text-rose-700 text-xs sm:text-sm font-extrabold mb-3">
+          🎉 النتيجة: <span id="final-score-badge">500%</span>
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-rose-950 mb-2">
+          اجتزت الاختبار بنجاح!
+        </h2>
+        <p class="text-rose-600 text-sm sm:text-base font-medium mb-8">
+          مفاجآتك الصغيرة بانتظارك.. اضغط على كل صندوق عشان تفتحه 🎁
+        </p>
+
+        <!-- شبكة الصناديق الثلاثة -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+          <!-- الصندوق 1: باقة ورد -->
+          <button
+            onclick="openGiftModal(1)"
+            class="gift-card group relative flex flex-col items-center justify-center p-6 rounded-3xl bg-gradient-to-b from-rose-50 to-pink-100/70 border-2 border-rose-200 hover:border-rose-400 shadow-sm hover:shadow-lg transition-all cursor-pointer">
+            <span id="badge-gift-1" class="hidden absolute top-3 left-3 w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center shadow">✓</span>
+            <div class="w-20 h-20 mb-3 flex items-center justify-center">
+              <!-- أيقونة صندوق هدية SVG -->
+              <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+                <rect x="18" y="42" width="64" height="46" rx="8" fill="#fb7185" />
+                <rect x="44" y="42" width="12" height="46" fill="#ffe4e6" />
+                <rect x="14" y="30" width="72" height="15" rx="6" fill="#e11d48" />
+                <rect x="44" y="30" width="12" height="15" fill="#fff1f2" />
+                <path d="M50 30 C35 12, 20 22, 36 30 Z" fill="#fda4af" />
+                <path d="M50 30 C65 12, 80 22, 64 30 Z" fill="#fda4af" />
+              </svg>
+            </div>
+            <span class="font-extrabold text-rose-950 text-base">المفاجأة الأولى</span>
+            <span class="text-xs text-rose-600 font-medium mt-0.5">اضغط للفتح</span>
+          </button>
+
+          <!-- الصندوق 2: أغنية -->
+          <button
+            onclick="openGiftModal(2)"
+            class="gift-card group relative flex flex-col items-center justify-center p-6 rounded-3xl bg-gradient-to-b from-amber-50/80 to-rose-100/70 border-2 border-rose-200 hover:border-rose-400 shadow-sm hover:shadow-lg transition-all cursor-pointer">
+            <span id="badge-gift-2" class="hidden absolute top-3 left-3 w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center shadow">✓</span>
+            <div class="w-20 h-20 mb-3 flex items-center justify-center">
+              <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+                <rect x="18" y="42" width="64" height="46" rx="8" fill="#f43f5e" />
+                <rect x="44" y="42" width="12" height="46" fill="#fef3c7" />
+                <rect x="14" y="30" width="72" height="15" rx="6" fill="#be123c" />
+                <rect x="44" y="30" width="12" height="15" fill="#fef3c7" />
+                <path d="M50 30 C35 12, 20 22, 36 30 Z" fill="#fde68a" />
+                <path d="M50 30 C65 12, 80 22, 64 30 Z" fill="#fde68a" />
+              </svg>
+            </div>
+            <span class="font-extrabold text-rose-950 text-base">المفاجأة الثانية</span>
+            <span class="text-xs text-rose-600 font-medium mt-0.5">اضغط للفتح</span>
+          </button>
+
+          <!-- الصندوق 3: رسالة من القلب -->
+          <button
+            onclick="openGiftModal(3)"
+            class="gift-card group relative flex flex-col items-center justify-center p-6 rounded-3xl bg-gradient-to-b from-pink-50 to-rose-100/80 border-2 border-rose-200 hover:border-rose-400 shadow-sm hover:shadow-lg transition-all cursor-pointer">
+            <span id="badge-gift-3" class="hidden absolute top-3 left-3 w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center shadow">✓</span>
+            <div class="w-20 h-20 mb-3 flex items-center justify-center">
+              <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+                <rect x="18" y="42" width="64" height="46" rx="8" fill="#e11d48" />
+                <rect x="44" y="42" width="12" height="46" fill="#ffe4e6" />
+                <rect x="14" y="30" width="72" height="15" rx="6" fill="#9f1239" />
+                <rect x="44" y="30" width="12" height="15" fill="#fff1f2" />
+                <path d="M50 30 C35 12, 20 22, 36 30 Z" fill="#fda4af" />
+                <path d="M50 30 C65 12, 80 22, 64 30 Z" fill="#fda4af" />
+              </svg>
+            </div>
+            <span class="font-extrabold text-rose-950 text-base">المفاجأة الثالثة</span>
+            <span class="text-xs text-rose-600 font-medium mt-0.5">اضغط للفتح</span>
+          </button>
+        </div>
+
+        <p id="all-opened-msg" class="hidden mt-6 text-sm font-bold text-rose-700 bg-rose-50 py-2.5 px-4 rounded-2xl border border-rose-200">
+          فتحت كل الهدايا.. أتمنى تكون رسمت ابتسامة على وجهك ❤️
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== نافذة المفاجأة 1: باقة الورد ==================== -->
+  <div id="modal-gift-1" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-rose-950/40 backdrop-blur-sm">
+    <div class="animate-stage relative w-full max-w-lg bg-gradient-to-b from-white to-rose-50 rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-rose-200 text-center max-h-[90vh] overflow-y-auto">
+      <button onclick="closeGiftModal(1)" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold flex items-center justify-center transition">✕</button>
+
+      <h3 class="text-2xl font-extrabold text-rose-950 mb-1">باقة ورد لعيونك 🌹</h3>
+      <p class="text-xs sm:text-sm text-rose-500 font-medium mb-5">كل وردة فيها تحمل لك كلمة من قلبي</p>
+
+      <!-- باقة الورد مع فقاعات الكلام الجانبية -->
+      <div class="relative flex flex-col sm:flex-row items-center justify-center gap-3 my-2">
+        <!-- فقاعات يمين -->
+        <div class="flex flex-col gap-2.5 w-full sm:w-1/3">
+          <div id="bubble-1" class="bg-white px-3.5 py-2.5 rounded-2xl rounded-bl-none border border-rose-200 shadow-sm text-xs sm:text-sm font-bold text-rose-800">
+            وجودك يخلّي أيامي أجمل
+          </div>
+          <div id="bubble-2" class="bg-white px-3.5 py-2.5 rounded-2xl rounded-bl-none border border-rose-200 shadow-sm text-xs sm:text-sm font-bold text-rose-800">
+            أنت أجمل صدفة بحياتي
+          </div>
+        </div>
+
+        <!-- رسمة باقة الورد SVG -->
+        <div class="w-44 h-52 sm:w-48 sm:h-56 flex-shrink-0 flex items-center justify-center">
+          <svg viewBox="0 0 220 260" class="w-full h-full drop-shadow-md">
+            <!-- ورق تغليف الباقة الخلفي -->
+            <polygon points="45,115 175,115 110,245" fill="#fde2e4" stroke="#f43f5e" stroke-width="2.5" stroke-linejoin="round" />
+            <polygon points="60,115 160,115 110,235" fill="#fff1f2" />
+            <!-- أوراق خضراء -->
+            <ellipse cx="72" cy="95" rx="18" ry="10" transform="rotate(-35 72 95)" fill="#16a34a" />
+            <ellipse cx="148" cy="95" rx="18" ry="10" transform="rotate(35 148 95)" fill="#16a34a" />
+            <ellipse cx="110" cy="68" rx="16" ry="9" fill="#15803d" />
+            <!-- ورود حمراء -->
+            <g transform="translate(110,85)">
+              <circle cx="0" cy="0" r="22" fill="#e11d48" />
+              <path d="M-10,-5 C-5,-15 10,-15 12,-2 C14,10 -5,14 -12,4 C-15,-2 -8,-8 0,-6" fill="none" stroke="#ffe4e6" stroke-width="2.5" stroke-linecap="round" />
+            </g>
+            <g transform="translate(80,102)">
+              <circle cx="0" cy="0" r="20" fill="#be123c" />
+              <path d="M-8,-4 C-4,-12 8,-12 10,-2 C12,8 -4,12 -10,3" fill="none" stroke="#fecdd3" stroke-width="2.2" stroke-linecap="round" />
+            </g>
+            <g transform="translate(140,102)">
+              <circle cx="0" cy="0" r="20" fill="#be123c" />
+              <path d="M-8,-4 C-4,-12 8,-12 10,-2 C12,8 -4,12 -10,3" fill="none" stroke="#fecdd3" stroke-width="2.2" stroke-linecap="round" />
+            </g>
+            <g transform="translate(95,122)">
+              <circle cx="0" cy="0" r="21" fill="#f43f5e" />
+              <path d="M-9,-4 C-4,-13 9,-13 11,-2 C13,9 -4,13 -10,4" fill="none" stroke="#fff1f2" stroke-width="2.2" stroke-linecap="round" />
+            </g>
+            <g transform="translate(125,122)">
+              <circle cx="0" cy="0" r="21" fill="#e11d48" />
+              <path d="M-9,-4 C-4,-13 9,-13 11,-2 C13,9 -4,13 -10,4" fill="none" stroke="#fff1f2" stroke-width="2.2" stroke-linecap="round" />
+            </g>
+            <!-- تغليف أمامي وشريطة -->
+            <polygon points="58,132 110,162 162,132 110,245" fill="#fecdd3" opacity="0.92" stroke="#fb7185" stroke-width="2" />
+            <!-- فيونكة حمراء -->
+            <path d="M110,185 C88,170 80,192 108,190 Z" fill="#e11d48" />
+            <path d="M110,185 C132,170 140,192 112,190 Z" fill="#e11d48" />
+            <path d="M108,188 L96,218 L104,216 L110,192 Z" fill="#be123c" />
+            <path d="M112,188 L124,218 L116,216 L110,192 Z" fill="#be123c" />
+            <circle cx="110" cy="187" r="5" fill="#9f1239" />
+          </svg>
+        </div>
+
+        <!-- فقاعات يسار -->
+        <div class="flex flex-col gap-2.5 w-full sm:w-1/3">
+          <div id="bubble-3" class="bg-white px-3.5 py-2.5 rounded-2xl rounded-br-none border border-rose-200 shadow-sm text-xs sm:text-sm font-bold text-rose-800">
+            كل لحظة معك تسوى الدنيا
+          </div>
+          <div id="bubble-4" class="bg-white px-3.5 py-2.5 rounded-2xl rounded-br-none border border-rose-200 shadow-sm text-xs sm:text-sm font-bold text-rose-800">
+            أختارك في كل يوم وكل وقت
+          </div>
+        </div>
+      </div>
+
+      <button onclick="closeGiftModal(1)" class="mt-6 px-7 py-2.5 rounded-2xl bg-rose-600 text-white font-bold text-sm hover:bg-rose-700 transition shadow">
+        تم، نكمل باقي المفاجآت ←
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== نافذة المفاجأة 2: بطاقة الأغنية ==================== -->
+  <div id="modal-gift-2" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-rose-950/40 backdrop-blur-sm">
+    <div class="animate-stage relative w-full max-w-md bg-gradient-to-br from-rose-50 via-white to-amber-50/70 rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-rose-200 text-center">
+      <button onclick="closeGiftModal(2)" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold flex items-center justify-center transition">✕</button>
+
+      <span class="inline-block px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-extrabold mb-3">
+        🎵 تذكرة موسيقية خاصة
+      </span>
+
+      <!-- بطاقة المشغل -->
+      <div class="relative bg-white/95 rounded-3xl p-5 shadow-lg border border-rose-100 my-2">
+        <!-- نوتات موسيقية عائمة -->
+        <span class="music-note absolute -top-3 right-6 text-rose-400 text-lg pointer-events-none">♪</span>
+        <span class="music-note absolute -top-4 left-10 text-pink-400 text-xl pointer-events-none" style="animation-delay: 1.1s;">♫</span>
+
+        <!-- مشغل الفيديو MP4 في منتصف البطاقة (يظهر تلقائياً عند وجود فيديو) -->
+        <div id="video-wrapper" class="hidden w-full mb-3 rounded-2xl overflow-hidden border-2 border-rose-200 shadow-md bg-black">
+          <video
+            id="local-video-player"
+            playsinline
+            controls
+            class="w-full max-h-56 object-contain mx-auto">
+          </video>
+        </div>
+
+        <!-- غلاف الأغنية + أسطوانة (تظهر في حال عدم اختيار فيديو) -->
+        <div id="vinyl-wrapper" class="relative w-32 h-32 mx-auto mb-3 flex items-center justify-center">
+          <div id="vinyl-disc" class="vinyl-spin w-28 h-28 rounded-full bg-gradient-to-tr from-rose-950 via-rose-800 to-rose-600 p-3 shadow-xl flex items-center justify-center border-4 border-rose-200">
+            <div class="w-12 h-12 rounded-full bg-rose-100 border-2 border-rose-300 flex items-center justify-center text-xl">
+              💖
+            </div>
+          </div>
+        </div>
+
+        <h3 id="display-song-title" class="text-xl font-extrabold text-rose-950">
+          I love you so
+        </h3>
+        <p id="display-song-artist" class="text-sm text-rose-500 font-semibold mt-0.5 mb-3">
+          M
+        </p>
+
+        <!-- شريط التقدم التفاعلي والمشغل الصوتي/المرئي -->
+        <div class="w-full bg-rose-100 h-1.5 rounded-full overflow-hidden mb-1.5" dir="ltr">
+          <div id="song-progress-bar" class="bg-rose-600 h-full w-0 rounded-full transition-all duration-300"></div>
+        </div>
+        <div class="flex justify-between text-[11px] font-bold text-rose-400 mb-4" dir="ltr">
+          <span id="song-time-current">0:00</span>
+          <span id="song-time-total">0:30</span>
+        </div>
+
+        <!-- أزرار التحكم -->
+        <div class="flex flex-wrap items-center justify-center gap-2.5">
+          <button
+            id="toggle-play-btn"
+            onclick="toggleSongPlayback()"
+            class="px-4 py-2.5 rounded-full bg-rose-600 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-md hover:bg-rose-700 transition active:scale-95"
+            aria-label="تشغيل أو إيقاف">
+            <span id="play-icon">❚❚</span>
+            <span id="play-label">إيقاف</span>
+          </button>
+
+          <label
+            for="custom-media-input"
+            class="cursor-pointer px-3.5 py-2.5 rounded-full bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-extrabold transition flex items-center gap-1">
+            <span>🎬 اختر فيديو MP4</span>
+            <input id="custom-media-input" type="file" accept="video/mp4,video/*,audio/*" class="hidden" onchange="handleLocalMediaSelect(event)" />
+          </label>
+
+          <a
+            id="external-song-link"
+            href="https://youtu.be/6IKAf1e_OWg?si=454JkZCnNMzlAXg"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-3.5 py-2.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-extrabold transition flex items-center gap-1">
+            <span>يوتيوب</span>
+            <span>↗</span>
+          </a>
+        </div>
+        <p id="media-source-hint" class="text-[11px] text-rose-400 font-medium mt-3">
+          للتشغيل التلقائي عند النشر: ضع ملف الفيديو باسم <span dir="ltr" class="font-bold text-rose-600">song.mp4</span> في نفس مجلد الصفحة
+        </p>
+      </div>
+
+      <button onclick="closeGiftModal(2)" class="mt-5 px-7 py-2.5 rounded-2xl bg-rose-600 text-white font-bold text-sm hover:bg-rose-700 transition shadow">
+        إغلاق البطاقة ←
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== نافذة المفاجأة 3: رسالة من القلب ==================== -->
+  <div id="modal-gift-3" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-rose-950/40 backdrop-blur-sm">
+    <div class="animate-stage relative w-full max-w-lg bg-[#fffdf9] rounded-3xl p-6 sm:p-9 shadow-2xl border-2 border-rose-200 text-right max-h-[90vh] overflow-y-auto">
+      <button onclick="closeGiftModal(3)" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold flex items-center justify-center transition">✕</button>
+
+      <div class="flex items-center gap-2.5 mb-4 border-b border-rose-100 pb-3">
+        <span class="text-2xl">💌</span>
+        <h3 class="text-xl sm:text-2xl font-extrabold text-rose-900">رسالة من قلبي لك</h3>
+      </div>
+
+      <!-- نص الرسالة على خلفية مخططة ناعمة -->
+      <div
+        id="letter-paper"
+        class="font-letter text-lg sm:text-xl leading-loose text-rose-950 bg-rose-50/40 p-5 rounded-2xl border border-rose-100 whitespace-pre-line min-h-[180px]">
+      </div>
+
+      <div class="mt-4 flex items-center justify-between">
+        <span id="display-signature" class="font-bold text-rose-700 text-sm sm:text-base">
+          مع كل الحب، دائماً وأبداً ❤️
+        </span>
+        <button onclick="closeGiftModal(3)" class="px-6 py-2 rounded-2xl bg-rose-600 text-white font-bold text-sm hover:bg-rose-700 transition shadow">
+          إغلاق
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== لوحة التعديل والتخصيص ==================== -->
+  <div id="editor-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+    <div class="animate-stage w-full max-w-lg bg-white rounded-3xl p-6 sm:p-7 shadow-2xl border border-rose-100 max-h-[90vh] overflow-y-auto text-right">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+        <h3 class="text-lg sm:text-xl font-extrabold text-rose-950">تخصيص الكلام والمحتوى ✏️</h3>
+        <button onclick="toggleEditor(false)" class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 font-bold">✕</button>
+      </div>
+
+      <div class="space-y-4 text-sm">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">سؤال البداية</label>
+          <input id="edit-question" type="text" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 focus:border-rose-400 focus:outline-none" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">عبارة الورد 1</label>
+            <input id="edit-b1" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:border-rose-400 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">عبارة الورد 2</label>
+            <input id="edit-b2" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:border-rose-400 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">عبارة الورد 3</label>
+            <input id="edit-b3" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:border-rose-400 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">عبارة الورد 4</label>
+            <input id="edit-b4" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:border-rose-400 focus:outline-none" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">اسم الأغنية</label>
+            <input id="edit-song-title" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:border-rose-400 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">اسم الفنان</label>
+            <input id="edit-song-artist" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:border-rose-400 focus:outline-none" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">رابط الأغنية (اختياري - يوتيوب أو سبوتيفاي)</label>
+          <input id="edit-song-url" type="url" dir="ltr" placeholder="https://..." class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:border-rose-400 focus:outline-none text-left" />
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">نص الرسالة الأخيرة</label>
+          <textarea id="edit-letter" rows="4" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 focus:border-rose-400 focus:outline-none leading-relaxed"></textarea>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">التوقيع أسفل الرسالة</label>
+          <input id="edit-signature" type="text" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 focus:border-rose-400 focus:outline-none" />
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between gap-3 mt-6 pt-4 border-t border-slate-100">
+        <button onclick="restoreDefaults()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100 transition">
+          استعادة الافتراضي
+        </button>
+        <div class="flex gap-2">
+          <button onclick="toggleEditor(false)" class="px-4 py-2 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">
+            إلغاء
+          </button>
+          <button onclick="saveCustomData()" class="px-6 py-2 rounded-xl text-sm font-extrabold bg-rose-600 text-white hover:bg-rose-700 transition shadow">
+            حفظ التعديلات ✓
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // البيانات الافتراضية المخصصة
+    const DEFAULT_CONFIG = {
+      question: "قد إيش تحبني؟",
+      bubbles: [
+        "وجودك يخلّي أيامي أجمل",
+        "أنت أجمل صدفة مرت علي",
+        "كل لحظة معك أثمن من ان تهدر",
+        "أختارك في كل يوم وكل وقت"
+      ],
+      songTitle: "I love you so",
+      songArtist: "M",
+      songUrl: "https://youtu.be/6IKAf1e_OWg?si=454JkZCnNMzlAXg",
+      letter: "اعتذر اليك ان ضايقتك فلا ارضى ان اراك حزينا بسببي اتمنى ان تبتسمي دوما 😊❤️",
+      signature: "شكرًا لك دائماً وأبداً ❤️"
+    };
+
+    let appData = { ...DEFAULT_CONFIG };
+    let openedGifts = new Set();
+    let isSongPlaying = false;
+    let songInterval = null;
+    let songSeconds = 0;
+    let hasRealMedia = false;
+    let currentMediaSrc = "song.mp4";
+    let melodyLoop = null;
+    let melodySynth = null;
+    let typewriterTimer = null;
+
+    const mediaPlayer = document.getElementById("local-video-player");
+
+    function formatTime(sec) {
+      if (!isFinite(sec) || sec < 0) return "0:00";
+      const m = Math.floor(sec / 60);
+      const s = String(Math.floor(sec % 60)).padStart(2, "0");
+      return `${m}:${s}`;
+    }
+
+    function showVideoFrame(show) {
+      const videoWrap = document.getElementById("video-wrapper");
+      const vinylWrap = document.getElementById("vinyl-wrapper");
+      if (!videoWrap || !vinylWrap) return;
+      if (show) {
+        videoWrap.classList.remove("hidden");
+        vinylWrap.classList.add("hidden");
+      } else {
+        videoWrap.classList.add("hidden");
+        vinylWrap.classList.remove("hidden");
+      }
+    }
+
+    // محاولة تحميل ملف song.mp4 تلقائياً إذا كان مرفوعاً بجانب الصفحة
+    function initLocalAudio() {
+      if (!mediaPlayer) return;
+      mediaPlayer.src = currentMediaSrc;
+
+      mediaPlayer.addEventListener("loadedmetadata", () => {
+        hasRealMedia = true;
+        showVideoFrame(true);
+        document.getElementById("song-time-total").textContent = formatTime(mediaPlayer.duration);
+        document.getElementById("media-source-hint").textContent = "تم تحميل الفيديو بنجاح 🎬";
+      });
+
+      mediaPlayer.addEventListener("error", () => {
+        hasRealMedia = false;
+        showVideoFrame(false);
+      });
+
+      mediaPlayer.addEventListener("timeupdate", () => {
+        if (!hasRealMedia) return;
+        document.getElementById("song-time-current").textContent = formatTime(mediaPlayer.currentTime);
+        const pct = mediaPlayer.duration ? (mediaPlayer.currentTime / mediaPlayer.duration) * 100 : 0;
+        document.getElementById("song-progress-bar").style.width = Math.min(100, pct) + "%";
+      });
+
+      mediaPlayer.addEventListener("play", () => {
+        isSongPlaying = true;
+        document.getElementById("play-icon").textContent = "❚❚";
+        const label = document.getElementById("play-label");
+        if (label) label.textContent = "إيقاف";
+      });
+
+      mediaPlayer.addEventListener("pause", () => {
+        isSongPlaying = false;
+        document.getElementById("play-icon").textContent = "▶";
+        const label = document.getElementById("play-label");
+        if (label) label.textContent = "تشغيل";
+      });
+
+      mediaPlayer.addEventListener("ended", () => {
+        mediaPlayer.currentTime = 0;
+        mediaPlayer.play().catch(() => {});
+      });
+    }
+
+    // اختيار ملف فيديو MP4 من الجهاز مباشرة وعرضه في وسط البطاقة
+    function handleLocalMediaSelect(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      stopRomanticMelody();
+      if (songInterval) clearInterval(songInterval);
+
+      const objectUrl = URL.createObjectURL(file);
+      hasRealMedia = true;
+      showVideoFrame(true);
+      mediaPlayer.src = objectUrl;
+      mediaPlayer.load();
+
+      document.getElementById("media-source-hint").textContent = `الفيديو المختار: ${file.name} ✅`;
+      isSongPlaying = true;
+      document.getElementById("play-icon").textContent = "❚❚";
+      document.getElementById("play-label").textContent = "إيقاف";
+
+      mediaPlayer.play().catch(() => {
+        showToast("اضغط على الفيديو أو زر التشغيل لبدء العرض 🎬");
+      });
+      showToast("تم إضافة الفيديو في منتصف البطاقة 🎬");
+    }
+
+    // تحميل البيانات المحفوظة إن وجدت
+    function loadSavedData() {
+      try {
+        const saved = localStorage.getItem("love_surprise_config_v1");
+        if (saved) {
+          appData = { ...DEFAULT_CONFIG, ...JSON.parse(saved) };
+        }
+      } catch (e) {
+        console.warn("تعذر قراءة التخزين المحلي:", e);
+      }
+      applyConfigToUI();
+    }
+
+    // تطبيق النصوص على عناصر الصفحة
+    function applyConfigToUI() {
+      document.getElementById("display-question").textContent = appData.question;
+      document.getElementById("bubble-1").textContent = appData.bubbles[0] || "";
+      document.getElementById("bubble-2").textContent = appData.bubbles[1] || "";
+      document.getElementById("bubble-3").textContent = appData.bubbles[2] || "";
+      document.getElementById("bubble-4").textContent = appData.bubbles[3] || "";
+      document.getElementById("display-song-title").textContent = appData.songTitle;
+      document.getElementById("display-song-artist").textContent = appData.songArtist;
+      document.getElementById("external-song-link").href = appData.songUrl || "#";
+      document.getElementById("display-signature").textContent = appData.signature;
+    }
+
+    // إنشاء قلوب عائمة في الخلفية
+    function initFloatingHearts() {
+      const container = document.getElementById("hearts-bg");
+      if (!container) return;
+      const symbols = ["❤️", "💖", "🌸", "💕", "✨"];
+      for (let i = 0; i < 16; i++) {
+        const el = document.createElement("span");
+        el.className = "floating-heart text-rose-300/60 select-none";
+        el.textContent = symbols[i % symbols.length];
+        el.style.left = Math.random() * 100 + "vw";
+        el.style.fontSize = (14 + Math.random() * 18) + "px";
+        el.style.animationDuration = (11 + Math.random() * 12) + "s";
+        el.style.animationDelay = (-Math.random() * 15) + "s";
+        container.appendChild(el);
+      }
+    }
+
+    // تشغيل لحن رومانسي ناعم عبر Tone.js يعمل داخل الصفحة بدون قيود يوتيوب
+    async function startRomanticMelody() {
+      try {
+        if (typeof Tone === "undefined") return;
+        await Tone.start();
+        stopRomanticMelody();
+
+        melodySynth = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: "triangle" },
+          envelope: { attack: 0.08, decay: 0.3, sustain: 0.25, release: 1.1 }
+        }).toDestination();
+        melodySynth.volume.value = -12;
+
+        const notes = [
+          "E4", "G4", "B4", "E5", "B4", "G4",
+          "D4", "F#4", "A4", "D5", "A4", "F#4",
+          "C4", "E4", "G4", "C5", "G4", "E4",
+          "B3", "D#4", "F#4", "B4", "F#4", "D#4"
+        ];
+        let step = 0;
+
+        melodyLoop = setInterval(() => {
+          if (!isSongPlaying || !melodySynth) return;
+          const note = notes[step % notes.length];
+          melodySynth.triggerAttackRelease(note, "8n");
+          step++;
+        }, 380);
+      } catch (e) {}
+    }
+
+    function stopRomanticMelody() {
+      if (melodyLoop) {
+        clearInterval(melodyLoop);
+        melodyLoop = null;
+      }
+      if (melodySynth) {
+        try {
+          melodySynth.releaseAll();
+          melodySynth.dispose();
+        } catch (e) {}
+        melodySynth = null;
+      }
+    }
+
+    function startSongProgressTimer() {
+      if (songInterval) clearInterval(songInterval);
+      songInterval = setInterval(() => {
+        if (!isSongPlaying) return;
+        songSeconds = (songSeconds + 1) % 160;
+        const mins = Math.floor(songSeconds / 60);
+        const secs = String(songSeconds % 60).padStart(2, "0");
+        const timeEl = document.getElementById("song-time-current");
+        const barEl = document.getElementById("song-progress-bar");
+        if (timeEl) timeEl.textContent = `${mins}:${secs}`;
+        if (barEl) barEl.style.width = Math.min(100, (songSeconds / 160) * 100) + "%";
+      }, 1000);
+    }
+
+    // رسم تعبيرات الشخصية اللطيفة حسب النسبة
+    function getCharacterSVG(val) {
+      if (val === 0) {
+        return `
+          <svg viewBox="0 0 120 120" class="w-24 h-24">
+            <circle cx="60" cy="65" r="38" fill="#fff" stroke="#f43f5e" stroke-width="3.5"/>
+            <path d="M32 38 L42 20 L52 34 Z" fill="#fff" stroke="#f43f5e" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M88 38 L78 20 L68 34 Z" fill="#fff" stroke="#f43f5e" stroke-width="3.5" stroke-linejoin="round"/>
+            <circle cx="46" cy="62" r="4" fill="#4a1525"/>
+            <circle cx="74" cy="62" r="4" fill="#4a1525"/>
+            <path d="M55 74 Q60 77 65 74" fill="none" stroke="#4a1525" stroke-width="3" stroke-linecap="round"/>
+            <ellipse cx="38" cy="70" rx="6" ry="3.5" fill="#fda4af" opacity="0.7"/>
+            <ellipse cx="82" cy="70" rx="6" ry="3.5" fill="#fda4af" opacity="0.7"/>
+          </svg>`;
+      } else if (val < 40) {
+        return `
+          <svg viewBox="0 0 120 120" class="w-24 h-24">
+            <circle cx="60" cy="65" r="38" fill="#fff" stroke="#f43f5e" stroke-width="3.5"/>
+            <path d="M32 38 L42 20 L52 34 Z" fill="#fff" stroke="#f43f5e" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M88 38 L78 20 L68 34 Z" fill="#fff" stroke="#f43f5e" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M40 58 L50 62" stroke="#4a1525" stroke-width="3" stroke-linecap="round"/>
+            <path d="M80 58 L70 62" stroke="#4a1525" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="46" cy="65" r="3.5" fill="#4a1525"/>
+            <circle cx="74" cy="65" r="3.5" fill="#4a1525"/>
+            <path d="M45 69 L45 84" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+            <path d="M75 69 L75 84" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+            <path d="M53 80 Q60 73 67 80" fill="none" stroke="#4a1525" stroke-width="3" stroke-linecap="round"/>
+          </svg>`;
+      } else if (val < 100) {
+        return `
+          <svg viewBox="0 0 120 120" class="w-24 h-24">
+            <circle cx="60" cy="65" r="38" fill="#fff" stroke="#e11d48" stroke-width="3.5"/>
+            <path d="M32 38 L42 20 L52 34 Z" fill="#fff" stroke="#e11d48" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M88 38 L78 20 L68 34 Z" fill="#fff" stroke="#e11d48" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M41 62 Q46 55 51 62" fill="none" stroke="#4a1525" stroke-width="3.2" stroke-linecap="round"/>
+            <path d="M69 62 Q74 55 79 62" fill="none" stroke="#4a1525" stroke-width="3.2" stroke-linecap="round"/>
+            <path d="M51 73 Q60 83 69 73" fill="none" stroke="#e11d48" stroke-width="3.2" stroke-linecap="round"/>
+            <ellipse cx="37" cy="70" rx="7" ry="4" fill="#fb7185" opacity="0.75"/>
+            <ellipse cx="83" cy="70" rx="7" ry="4" fill="#fb7185" opacity="0.75"/>
+          </svg>`;
+      } else {
+        return `
+          <svg viewBox="0 0 120 120" class="w-24 h-24">
+            <circle cx="60" cy="65" r="38" fill="#fff1f2" stroke="#e11d48" stroke-width="3.5"/>
+            <path d="M32 38 L42 20 L52 34 Z" fill="#fff1f2" stroke="#e11d48" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M88 38 L78 20 L68 34 Z" fill="#fff1f2" stroke="#e11d48" stroke-width="3.5" stroke-linejoin="round"/>
+            <text x="38" y="67" font-size="16">❤️</text>
+            <text x="66" y="67" font-size="16">❤️</text>
+            <path d="M50 75 Q60 88 70 75 Z" fill="#e11d48"/>
+            <text x="14" y="34" font-size="15">💖</text>
+            <text x="90" y="34" font-size="15">💖</text>
+          </svg>`;
+      }
+    }
+
+    // تحديث واجهة مقياس الحب عند السحب
+    const slider = document.getElementById("love-slider");
+    const percentageText = document.getElementById("percentage-number");
+    const captionText = document.getElementById("reaction-caption");
+    const characterStage = document.getElementById("character-stage");
+    const confirmBtn = document.getElementById("confirm-love-btn");
+    const overflowBadge = document.getElementById("overflow-badge");
+
+    function updateLoveUI(val) {
+      percentageText.textContent = val;
+      characterStage.innerHTML = getCharacterSVG(val);
+
+      if (val === 0) {
+        captionText.textContent = "اسحب المؤشر وورّيني قد إيش 👀";
+        overflowBadge.classList.add("hidden");
+      } else if (val < 30) {
+        captionText.textContent = "بس هالقد؟ لا تكسر خاطري 🥺";
+        overflowBadge.classList.add("hidden");
+      } else if (val < 70) {
+        captionText.textContent = "بدينا نقرّب.. زيدها شوي بعد! 😊";
+        overflowBadge.classList.add("hidden");
+      } else if (val < 100) {
+        captionText.textContent = "يا سلام! باقي نتفة وتوصل للكمال 🥰";
+        overflowBadge.classList.add("hidden");
+      } else if (val < 135) {
+        captionText.textContent = "إجابة صحيحة ومثالية 100%! 💖";
+        overflowBadge.classList.remove("hidden");
+      } else if (val < 300) {
+        captionText.textContent = "واضح انت مهووس فيني ههه امزح احبك";
+        overflowBadge.classList.remove("hidden");
+      } else if (val < 500) {
+        captionText.textContent = "الله احبك";
+        overflowBadge.classList.remove("hidden");
+      } else {
+        captionText.textContent = "حب لا نهائي! أسعدت قلبي والله 🔥❤️ اسف زعلتك بكلامي وانا ما ارضى اشوفك زعلان مني";
+        overflowBadge.classList.remove("hidden");
+      }
+
+      if (val >= 100) {
+        confirmBtn.className = "w-full sm:w-auto min-w-[230px] px-8 py-3.5 rounded-2xl font-extrabold text-base sm:text-lg transition-all duration-300 shadow-lg shadow-rose-300 bg-gradient-to-l from-rose-600 to-pink-600 text-white cursor-pointer hover:scale-105 active:scale-95";
+        confirmBtn.textContent = "افتح مفاجآتك الآن 🎁";
+      } else {
+        confirmBtn.className = "w-full sm:w-auto min-w-[220px] px-8 py-3.5 rounded-2xl font-extrabold text-base sm:text-lg transition-all duration-300 shadow-sm bg-rose-200 text-rose-600 cursor-pointer hover:bg-rose-300 active:scale-95";
+        confirmBtn.textContent = "تأكيد النتيجة ✨";
+      }
+    }
+
+    slider.addEventListener("input", (e) => {
+      const val = parseInt(e.target.value, 10);
+      updateLoveUI(val);
+    });
+
+    // تشغيل نغمة لطيفة عبر Tone.js عند النجاح
+    function playSuccessChime() {
+      try {
+        if (typeof Tone !== "undefined") {
+          Tone.start();
+          const synth = new Tone.PolySynth(Tone.Synth, {
+            oscillator: { type: "sine" },
+            envelope: { attack: 0.02, decay: 0.2, sustain: 0.1, release: 0.6 }
+          }).toDestination();
+          synth.volume.value = -10;
+          const now = Tone.now();
+          synth.triggerAttackRelease("C5", "8n", now);
+          synth.triggerAttackRelease("E5", "8n", now + 0.12);
+          synth.triggerAttackRelease("G5", "8n", now + 0.24);
+          synth.triggerAttackRelease("C6", "4n", now + 0.36);
+        }
+      } catch (e) {}
+    }
+
+    // إظهار رسالة تنبيهية ناعمة
+    function showToast(msg) {
+      const box = document.getElementById("toast-box");
+      document.getElementById("toast-text").textContent = msg;
+      box.classList.remove("opacity-0", "-translate-y-2");
+      box.classList.add("opacity-100", "translate-y-0");
+      setTimeout(() => {
+        box.classList.add("opacity-0", "-translate-y-2");
+        box.classList.remove("opacity-100", "translate-y-0");
+      }, 2500);
+    }
+
+    // الضغط على زر التأكيد
+    function handleConfirmLove() {
+      const val = parseInt(slider.value, 10);
+      if (val < 100) {
+        const card = document.getElementById("stage-1");
+        card.classList.remove("shake-nudge");
+        void card.offsetWidth;
+        card.classList.add("shake-nudge");
+        showToast("لازم توصل النسبة 100% على الأقل عشان تفتح الهدايا 😉");
+        return;
+      }
+
+      playSuccessChime();
+      document.getElementById("final-score-badge").textContent = val + "%";
+      document.getElementById("stage-1").classList.add("hidden");
+      document.getElementById("stage-2").classList.remove("hidden");
+      document.getElementById("reset-btn").classList.remove("hidden");
+      document.getElementById("reset-btn").classList.add("flex");
+    }
+
+    // فتح نوافذ الهدايا الثلاث
+    function openGiftModal(num) {
+      const modal = document.getElementById(`modal-gift-${num}`);
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+
+      openedGifts.add(num);
+      const badge = document.getElementById(`badge-gift-${num}`);
+      badge.classList.remove("hidden");
+      badge.classList.add("flex");
+
+      if (openedGifts.size === 3) {
+        document.getElementById("all-opened-msg").classList.remove("hidden");
+      }
+
+      if (num === 2) {
+        isSongPlaying = true;
+        const disc = document.getElementById("vinyl-disc");
+        if (disc) disc.classList.remove("vinyl-paused");
+        document.getElementById("play-icon").textContent = "❚❚";
+        const label = document.getElementById("play-label");
+        if (label) label.textContent = "إيقاف";
+
+        if (hasRealMedia && mediaPlayer) {
+          stopRomanticMelody();
+          showVideoFrame(true);
+          mediaPlayer.play().catch(() => {
+            isSongPlaying = false;
+            document.getElementById("play-icon").textContent = "▶";
+            if (label) label.textContent = "تشغيل";
+          });
+        } else {
+          showVideoFrame(false);
+          startRomanticMelody();
+          startSongProgressTimer();
+        }
+      } else if (num === 3) {
+        startLetterTypewriter();
+      }
+    }
+
+    function closeGiftModal(num) {
+      const modal = document.getElementById(`modal-gift-${num}`);
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+
+      if (num === 2) {
+        isSongPlaying = false;
+        if (mediaPlayer) mediaPlayer.pause();
+        stopRomanticMelody();
+        if (songInterval) clearInterval(songInterval);
+      }
+      if (num === 3 && typewriterTimer) {
+        clearInterval(typewriterTimer);
+      }
+    }
+
+    function toggleSongPlayback() {
+      isSongPlaying = !isSongPlaying;
+      const disc = document.getElementById("vinyl-disc");
+      const icon = document.getElementById("play-icon");
+      const label = document.getElementById("play-label");
+
+      if (isSongPlaying) {
+        if (disc) disc.classList.remove("vinyl-paused");
+        icon.textContent = "❚❚";
+        if (label) label.textContent = "إيقاف";
+        if (hasRealMedia && mediaPlayer) {
+          mediaPlayer.play().catch(() => {});
+        } else {
+          startRomanticMelody();
+        }
+      } else {
+        if (disc) disc.classList.add("vinyl-paused");
+        icon.textContent = "▶";
+        if (label) label.textContent = "تشغيل";
+        if (hasRealMedia && mediaPlayer) {
+          mediaPlayer.pause();
+        } else {
+          stopRomanticMelody();
+        }
+      }
+    }
+
+    // تأثير الكتابة التدريجية للرسالة
+    function startLetterTypewriter() {
+      if (typewriterTimer) clearInterval(typewriterTimer);
+      const container = document.getElementById("letter-paper");
+      const fullText = appData.letter;
+      container.textContent = "";
+      let idx = 0;
+
+      typewriterTimer = setInterval(() => {
+        if (idx < fullText.length) {
+          container.textContent += fullText.charAt(idx);
+          idx++;
+        } else {
+          clearInterval(typewriterTimer);
+        }
+      }, 28);
+    }
+
+    // إعادة التجربة من البداية
+    function resetExperience() {
+      slider.value = 0;
+      updateLoveUI(0);
+      document.getElementById("stage-2").classList.add("hidden");
+      document.getElementById("stage-1").classList.remove("hidden");
+      document.getElementById("reset-btn").classList.add("hidden");
+      document.getElementById("reset-btn").classList.remove("flex");
+    }
+
+    // فتح/إغلاق نافذة التعديل
+    function toggleEditor(show) {
+      const modal = document.getElementById("editor-modal");
+      if (show) {
+        document.getElementById("edit-question").value = appData.question;
+        document.getElementById("edit-b1").value = appData.bubbles[0] || "";
+        document.getElementById("edit-b2").value = appData.bubbles[1] || "";
+        document.getElementById("edit-b3").value = appData.bubbles[2] || "";
+        document.getElementById("edit-b4").value = appData.bubbles[3] || "";
+        document.getElementById("edit-song-title").value = appData.songTitle;
+        document.getElementById("edit-song-artist").value = appData.songArtist;
+        document.getElementById("edit-song-url").value = appData.songUrl;
+        document.getElementById("edit-letter").value = appData.letter;
+        document.getElementById("edit-signature").value = appData.signature;
+
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      } else {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
+    function saveCustomData() {
+      appData = {
+        question: document.getElementById("edit-question").value.trim() || DEFAULT_CONFIG.question,
+        bubbles: [
+          document.getElementById("edit-b1").value.trim() || DEFAULT_CONFIG.bubbles[0],
+          document.getElementById("edit-b2").value.trim() || DEFAULT_CONFIG.bubbles[1],
+          document.getElementById("edit-b3").value.trim() || DEFAULT_CONFIG.bubbles[2],
+          document.getElementById("edit-b4").value.trim() || DEFAULT_CONFIG.bubbles[3]
+        ],
+        songTitle: document.getElementById("edit-song-title").value.trim() || DEFAULT_CONFIG.songTitle,
+        songArtist: document.getElementById("edit-song-artist").value.trim() || DEFAULT_CONFIG.songArtist,
+        songUrl: document.getElementById("edit-song-url").value.trim() || DEFAULT_CONFIG.songUrl,
+        letter: document.getElementById("edit-letter").value.trim() || DEFAULT_CONFIG.letter,
+        signature: document.getElementById("edit-signature").value.trim() || DEFAULT_CONFIG.signature
+      };
+
+      try {
+        localStorage.setItem("love_surprise_config_v1", JSON.stringify(appData));
+      } catch (e) {}
+
+      applyConfigToUI();
+      toggleEditor(false);
+      showToast("تم حفظ تعديلاتك بنجاح ❤️");
+    }
+
+    function restoreDefaults() {
+      appData = { ...DEFAULT_CONFIG };
+      try {
+        localStorage.removeItem("love_surprise_config_v1");
+      } catch (e) {}
+      applyConfigToUI();
+      toggleEditor(false);
+      showToast("تمت استعادة النصوص الافتراضية");
+    }
+
+    // تهيئة التطبيق فوراً وعند اكتمال التحميل
+    function bootstrapApp() {
+      initFloatingHearts();
+      initLocalAudio();
+      loadSavedData();
+      updateLoveUI(0);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", bootstrapApp);
+    } else {
+      bootstrapApp();
+    }
+  </script>
+</body>
+</html>
